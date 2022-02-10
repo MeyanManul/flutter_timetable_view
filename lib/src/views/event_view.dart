@@ -13,21 +13,20 @@ class EventView extends StatelessWidget {
     Key? key,
     required this.event,
     required this.timetableStyle,
-  })  : 
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: top(),
-      height: height(),
-      left: 0,
-      width: timetableStyle.laneWidth,
+      top: 0,
+      left: left(),
+      height: timetableStyle.laneHeight,
+      width: width(),
       child: GestureDetector(
         onTap: event.onTap,
         child: Container(
-          decoration: event.decoration ??
-              (BoxDecoration(color: event.backgroundColor)),
+          decoration:
+              event.decoration ?? (BoxDecoration(color: event.backgroundColor)),
           margin: event.margin,
           padding: event.padding,
           child: (Utils.eventText)(
@@ -35,14 +34,11 @@ class EventView extends StatelessWidget {
             context,
             math.max(
                 0.0,
-                height() -
+                timetableStyle.laneHeight -
                     (event.padding.top) -
                     (event.padding.bottom)),
             math.max(
-                0.0,
-                timetableStyle.laneWidth -
-                    (event.padding.left ) -
-                    (event.padding.right )),
+                0.0, width() - (event.padding.left) - (event.padding.right)),
           ),
         ),
       ),
@@ -55,9 +51,21 @@ class EventView extends StatelessWidget {
         timetableStyle.startHour * timetableStyle.timeItemHeight;
   }
 
+  double left() {
+    return calculateLeftOffset(event.start.hour, event.start.minute,
+            timetableStyle.timeItemWidth) -
+        timetableStyle.startHour * timetableStyle.timeItemWidth;
+  }
+
   double height() {
     return calculateTopOffset(0, event.end.difference(event.start).inMinutes,
             timetableStyle.timeItemHeight) +
+        1;
+  }
+
+  double width() {
+    return calculateLeftOffset(0, event.end.difference(event.start).inMinutes,
+            timetableStyle.timeItemWidth) +
         1;
   }
 
@@ -67,5 +75,13 @@ class EventView extends StatelessWidget {
     double? hourRowHeight,
   ]) {
     return (hour + (minute / 60)) * (hourRowHeight ?? 60);
+  }
+
+  double calculateLeftOffset(
+    int hour, [
+    int minute = 0,
+    double? hourRowWidth,
+  ]) {
+    return (hour + (minute / 60)) * (hourRowWidth ?? 60);
   }
 }

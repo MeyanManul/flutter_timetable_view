@@ -16,33 +16,46 @@ class BackgroundPainter extends CustomPainter {
     );
     if (timetableStyle.visibleTimeBorder) {
       for (int hour = 1; hour < 24; hour++) {
-        double topOffset = calculateTopOffset(hour);
+        double leftOffset = calculateLeftOffset(hour);
         canvas.drawLine(
-          Offset(0, topOffset),
-          Offset(size.width, topOffset),
-          Paint()..color = timetableStyle.timelineBorderColor,
+          Offset(leftOffset, 0),
+          Offset(leftOffset, size.height),
+          Paint()
+            ..color = timetableStyle.timelineBorderColor
+            ..strokeWidth = 0.25,
         );
       }
     }
 
-    if (timetableStyle.visibleDecorationBorder) {
-      final drawLimit = size.height / timetableStyle.decorationLineHeight;
-      for (double count = 0; count < drawLimit; count += 1) {
-        double topOffset = calculateDecorationLineOffset(count);
-        final paint = Paint()..color = timetableStyle.decorationLineBorderColor;
-        final dashWidth = timetableStyle.decorationLineDashWidth;
-        final dashSpace = timetableStyle.decorationLineDashSpaceWidth;
-        var startX = 0.0;
-        while (startX < size.width) {
-          canvas.drawLine(
-            Offset(startX, topOffset),
-            Offset(startX + timetableStyle.decorationLineDashWidth, topOffset),
-            paint,
-          );
-          startX += dashWidth + dashSpace;
-        }
-      }
-    }
+    // if (timetableStyle.visibleTimeBorder) {
+    //   for (int hour = 1; hour < 24; hour++) {
+    //     double topOffset = calculateTopOffset(hour);
+    //     canvas.drawLine(
+    //       Offset(0, topOffset),
+    //       Offset(size.width, topOffset),
+    //       Paint()..color = timetableStyle.timelineBorderColor,
+    //     );
+    //   }
+    // }
+
+    // if (timetableStyle.visibleDecorationBorder) {
+    //   final drawLimit = size.width / timetableStyle.decorationLineWidth;
+    //   for (double count = 0; count < drawLimit; count += 1) {
+    //     double leftOffset = calculateDecorationVerticalLineOffset(count);
+    //     final paint = Paint()..color = timetableStyle.decorationLineBorderColor;
+    //     final dashWidth = timetableStyle.decorationLineDashWidth;
+    //     final dashSpace = timetableStyle.decorationLineDashSpaceWidth;
+    //     var startX = 0.0;
+    //     while (startX < size.width) {
+    //       canvas.drawLine(
+    //         Offset(startX, leftOffset),
+    //         Offset(startX + timetableStyle.decorationLineDashWidth, leftOffset),
+    //         paint,
+    //       );
+    //       startX += dashWidth + dashSpace;
+    //     }
+    //   }
+    // }
   }
 
   @override
@@ -55,6 +68,11 @@ class BackgroundPainter extends CustomPainter {
 
   double calculateTopOffset(int hour) => hour * timetableStyle.timeItemHeight;
 
-  double calculateDecorationLineOffset(double count) =>
+  double calculateLeftOffset(int hour) => hour * timetableStyle.timeItemWidth;
+
+  double calculateDecorationHorizontalLineOffset(double count) =>
       count * timetableStyle.decorationLineHeight;
+
+  double calculateDecorationVerticalLineOffset(double count) =>
+      count * timetableStyle.decorationLineWidth;
 }

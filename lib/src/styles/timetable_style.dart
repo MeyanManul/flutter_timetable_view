@@ -31,6 +31,8 @@ class TimetableStyle {
 
   final double decorationLineHeight;
 
+  final double decorationLineWidth;
+
   final double decorationLineDashWidth;
 
   final double decorationLineDashSpaceWidth;
@@ -55,6 +57,7 @@ class TimetableStyle {
     this.timeItemHeight: 60,
     this.timeItemWidth: 70,
     this.decorationLineHeight: 20,
+    this.decorationLineWidth: 20,
     this.decorationLineDashWidth: 9,
     this.decorationLineDashSpaceWidth: 4,
     this.visibleTimeBorder: true,

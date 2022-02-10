@@ -51,8 +51,8 @@ class _TimetableViewState extends State<TimetableView>
       left: 0,
       top: 0,
       child: SizedBox(
-        width: widget.timetableStyle.timeItemWidth,
-        height: widget.timetableStyle.laneHeight,
+        width: widget.timetableStyle.laneWidth,
+        height: widget.timetableStyle.timeItemHeight,
         child: DecoratedBox(
           decoration: BoxDecoration(color: widget.timetableStyle.cornerColor),
         ),
@@ -63,20 +63,20 @@ class _TimetableViewState extends State<TimetableView>
   Widget _buildMainContent(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        left: widget.timetableStyle.timeItemWidth,
-        top: widget.timetableStyle.laneHeight,
+        left: widget.timetableStyle.laneWidth,
+        top: widget.timetableStyle.timeItemHeight,
       ),
       child: DiagonalScrollView(
         horizontalPixelsStreamController: horizontalPixelsStream,
         verticalPixelsStreamController: verticalPixelsStream,
         onScroll: onScroll,
         maxWidth:
-            widget.laneEventsList.length * widget.timetableStyle.laneWidth,
-        maxHeight:
             (widget.timetableStyle.endHour - widget.timetableStyle.startHour) *
-                widget.timetableStyle.timeItemHeight,
+                widget.timetableStyle.timeItemWidth,
+        maxHeight:
+            widget.laneEventsList.length * widget.timetableStyle.laneHeight,
         child: IntrinsicHeight(
-          child: Row(
+          child: Column(
             children: widget.laneEventsList.map((laneEvents) {
               return LaneView(
                 events: laneEvents.events,
@@ -92,13 +92,13 @@ class _TimetableViewState extends State<TimetableView>
   Widget _buildTimelineList(BuildContext context) {
     return Container(
       alignment: Alignment.topLeft,
-      width: widget.timetableStyle.timeItemWidth,
-      padding: EdgeInsets.only(top: widget.timetableStyle.laneHeight),
+      height: widget.timetableStyle.timeItemHeight,
+      padding: EdgeInsets.only(left: widget.timetableStyle.laneWidth),
       color: widget.timetableStyle.timelineColor,
       child: ListView(
         physics: const ClampingScrollPhysics(),
-        controller: verticalScrollController,
-        scrollDirection: Axis.vertical,
+        controller: horizontalScrollController,
+        scrollDirection: Axis.horizontal,
         shrinkWrap: true,
         children: [
           for (var i = widget.timetableStyle.startHour;
@@ -107,7 +107,7 @@ class _TimetableViewState extends State<TimetableView>
             i
         ].map((hour) {
           return Container(
-            height: widget.timetableStyle.timeItemHeight,
+            width: widget.timetableStyle.timeItemWidth,
             decoration: BoxDecoration(
               border: Border(
                 top: BorderSide(
@@ -120,7 +120,7 @@ class _TimetableViewState extends State<TimetableView>
             child: Text(
               Utils.hourFormatter(hour, 0),
               style: TextStyle(color: widget.timetableStyle.timeItemTextColor),
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.left,
             ),
           );
         }).toList(),
@@ -132,12 +132,12 @@ class _TimetableViewState extends State<TimetableView>
     return Container(
       alignment: Alignment.topLeft,
       color: widget.timetableStyle.laneColor,
-      height: widget.timetableStyle.laneHeight,
-      padding: EdgeInsets.only(left: widget.timetableStyle.timeItemWidth),
+      width: widget.timetableStyle.laneWidth,
+      padding: EdgeInsets.only(top: widget.timetableStyle.timeItemHeight),
       child: ListView(
-        scrollDirection: Axis.horizontal,
+        scrollDirection: Axis.vertical,
         physics: const ClampingScrollPhysics(),
-        controller: horizontalScrollController,
+        controller: verticalScrollController,
         shrinkWrap: true,
         children: widget.laneEventsList.map((laneEvents) {
           return Container(

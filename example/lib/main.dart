@@ -30,7 +30,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: TimetableView(
         laneEventsList: _buildLaneEvents(),
-        timetableStyle: TimetableStyle(),
+        timetableStyle: TimetableStyle(
+          laneWidth: 70,
+          timeItemHeight: 20,
+          timeItemWidth: 100,
+        ),
       ),
     );
   }
@@ -60,6 +64,37 @@ class _MyHomePageState extends State<MyHomePage> {
             start: TableEventTime(hour: 10, minute: 10),
             end: TableEventTime(hour: 11, minute: 45),
           ),
+        ],
+      ),
+      LaneEvents(
+        lane: Lane(name: 'Track C'),
+        events: [
+          TableEvent(
+              title: 'test left',
+              start: TableEventTime(
+                hour: 0,
+                minute: 0,
+              ),
+              end: TableEventTime(
+                hour: 5,
+                minute: 0,
+              ))
+        ],
+      ),
+      LaneEvents(
+        lane: Lane(name: 'Номер 10'),
+        events: [
+          TableEvent(
+            title: 'Константин',
+            start: TableEventTime(
+              hour: 0,
+              minute: 0,
+            ),
+            end: TableEventTime(
+              hour: 1,
+              minute: 0,
+            ),
+          )
         ],
       ),
     ];

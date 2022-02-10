@@ -12,14 +12,13 @@ class LaneView extends StatelessWidget {
     Key? key,
     required this.events,
     required this.timetableStyle,
-  })  : 
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height(),
-      width: timetableStyle.laneWidth,
+      height: timetableStyle.laneHeight,
+      width: width(),
       child: Stack(
         children: [
           ...[
@@ -40,6 +39,11 @@ class LaneView extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  double width() {
+    return (timetableStyle.endHour - timetableStyle.startHour) *
+        timetableStyle.timeItemWidth;
   }
 
   double height() {
