@@ -45,27 +45,26 @@ class Utils {
       ),
       TextSpan(
         text: ' ' +
-            Utils.hourFormatter(event.start.hour, event.start.minute) +
-            ' - ' +
-            Utils.hourFormatter(event.end.hour, event.end.minute) +
-            '\n\n',
+            // Utils.hourFormatter(event.start.hour, event.start.minute) +
+            // ' - ' +
+            Utils.hourFormatter(event.end.hour, event.end.minute),
       ),
     ];
 
-    bool? exceedHeight;
-    while (exceedHeight ?? true) {
-      exceedHeight = _exceedHeight(text, event.textStyle, height, width);
-      if (exceedHeight == null || !exceedHeight) {
-        if (exceedHeight == null) {
-          text.clear();
-        }
-        break;
-      }
+    // bool? exceedHeight;
+    // while (exceedHeight ?? true) {
+    //   exceedHeight = _exceedHeight(text, event.textStyle, height, width);
+    //   if (exceedHeight == null || !exceedHeight) {
+    //     if (exceedHeight == null) {
+    //       text.clear();
+    //     }
+    //     break;
+    //   }
 
-      if (!_ellipsize(text)) {
-        break;
-      }
-    }
+    //   if (!_ellipsize(text)) {
+    //     break;
+    //   }
+    // }
 
     return RichText(
       text: TextSpan(

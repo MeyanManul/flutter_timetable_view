@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
         lane: Lane(name: 'Track C'),
         events: [
           TableEvent(
-              title: 'test left',
+              title: 'test left +0987654321',
               start: TableEventTime(
                 hour: 0,
                 minute: 0,
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
         lane: Lane(name: 'Номер 10'),
         events: [
           TableEvent(
-            title: 'Константин',
+            title: 'Константин +0987654321',
             start: TableEventTime(
               hour: 0,
               minute: 0,
