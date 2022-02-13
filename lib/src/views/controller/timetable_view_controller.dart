@@ -31,6 +31,10 @@ mixin TimetableViewController {
     }
   }
 
+  double getHorizontal() {
+    return _horizontalScrollController.position.minScrollExtent;
+  }
+
   void setVertical(double num) {
     if (_verticalScrollController.position.maxScrollExtent >= num) {
       _verticalScrollController.jumpTo(num);
@@ -46,7 +50,7 @@ mixin TimetableViewController {
     _verticalPixelsStream.sink.add(_verticalScrollController.position.pixels);
   }
 
-  void onScroll(val) {
+  Offset onScroll(val) {
     double dxNam = val.dx;
     if (dxNam < 0) dxNam *= -1;
     setHorizontal(dxNam);
@@ -54,5 +58,7 @@ mixin TimetableViewController {
     double dyNam = val.dy;
     if (dyNam < 0) dyNam *= -1;
     setVertical(dyNam);
+
+    return Offset(dxNam, dyNam);
   }
 }

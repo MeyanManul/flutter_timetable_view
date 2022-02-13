@@ -10,15 +10,34 @@ class TimetableView extends StatefulWidget {
   final List<LaneEvents> laneEventsList;
   final TimetableStyle timetableStyle;
 
-  TimetableView({
-    Key? key,
-    required this.laneEventsList,
-    this.timetableStyle: const TimetableStyle(),
-  }) : super(key: key);
+  TimetableView(
+      {Key? key,
+      required this.laneEventsList,
+      this.timetableStyle: const TimetableStyle()})
+      : super(key: key);
+
+  double getHorizontalOffset() {
+    return horizontalOffset;
+  }
+
+  double setHorizontalOffset(double x) {
+    return horizontalOffset = x;
+  }
+
+  double getVerticalOffset() {
+    return verticalOffset;
+  }
+
+  double setVerticalOffset(double x) {
+    return verticalOffset = x;
+  }
 
   @override
   _TimetableViewState createState() => _TimetableViewState();
 }
+
+double horizontalOffset = 0;
+double verticalOffset = 0;
 
 class _TimetableViewState extends State<TimetableView>
     with TimetableViewController {
@@ -36,6 +55,10 @@ class _TimetableViewState extends State<TimetableView>
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => setHorizontal(horizontalOffset));
+    WidgetsBinding.instance!
+        .addPostFrameCallback((_) => setVertical(verticalOffset));
     return Stack(
       children: <Widget>[
         _buildCorner(),
@@ -69,7 +92,11 @@ class _TimetableViewState extends State<TimetableView>
       child: DiagonalScrollView(
         horizontalPixelsStreamController: horizontalPixelsStream,
         verticalPixelsStreamController: verticalPixelsStream,
-        onScroll: onScroll,
+        onScroll: (offset) {
+          var o = onScroll(offset);
+          horizontalOffset = o.dx;
+          verticalOffset = o.dy;
+        },
         maxWidth:
             (widget.timetableStyle.endHour - widget.timetableStyle.startHour) *
                 widget.timetableStyle.timeItemWidth,

@@ -27,13 +27,21 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Flutter Timetable View Demo'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {});
+            },
+            icon: Icon(Icons.refresh),
+          ),
+        ],
       ),
       body: TimetableView(
         laneEventsList: _buildLaneEvents(),
         timetableStyle: TimetableStyle(
           laneWidth: 70,
           timeItemHeight: 20,
-          timeItemWidth: 100,
+          decorationLineHeight: 20,
         ),
       ),
     );
@@ -42,7 +50,9 @@ class _MyHomePageState extends State<MyHomePage> {
   List<LaneEvents> _buildLaneEvents() {
     return [
       LaneEvents(
-        lane: Lane(name: 'Track A'),
+        lane: Lane(
+          name: 'Track A',
+        ),
         events: [
           TableEvent(
             title: 'An event 1',
@@ -57,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       LaneEvents(
-        lane: Lane(name: 'Track B'),
+        lane: Lane(
+          name: 'Track B',
+        ),
         events: [
           TableEvent(
             title: 'An event 3',
@@ -67,7 +79,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       LaneEvents(
-        lane: Lane(name: 'Track C'),
+        lane: Lane(
+          name: 'Track C',
+        ),
         events: [
           TableEvent(
               title: 'test left +0987654321',
@@ -82,7 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ],
       ),
       LaneEvents(
-        lane: Lane(name: 'Номер 10'),
+        lane: Lane(
+          name: 'Номер 10',
+        ),
         events: [
           TableEvent(
             title: 'Константин +0987654321',
